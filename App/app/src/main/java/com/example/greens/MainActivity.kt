@@ -3,13 +3,17 @@ package com.example.greens
 import android.app.Activity
 import android.os.Bundle
 import android.widget.Button
+import java.text.SimpleDateFormat
 import java.util.*
 
 
 class MainActivity : Activity() {
-    // Declare timestamp lists
+    // Declare timestamp variables
     private var shiftStartTime : Long = -1
     private var totalShiftTimes : LinkedList<Long> = LinkedList()
+
+    private var payPeriodStart : String = ""
+    private var payPeriods : LinkedList<Pair<String, String>> = LinkedList()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,6 +24,12 @@ class MainActivity : Activity() {
         val shiftButton: Button = findViewById<Button>(R.id.shift_button)  // Get the shift button
         shiftButton.setOnClickListener {
             shiftClicked(shiftButton)
+        }
+
+        // Handle clicked pay period button
+        val payPeriodButton: Button = findViewById<Button>(R.id.pay_period_button)  // Get the pay period button
+        payPeriodButton.setOnClickListener {
+            payPeriodClicked(payPeriodButton)
         }
     }
 
@@ -40,6 +50,25 @@ class MainActivity : Activity() {
             totalShiftTimes.add(totalShiftTime)  // Add to list of shift times for this pay period
             button.setText(R.string.start_shift)
             println("Shift ended at $currentTime")
+        }
+    }
+
+    private fun payPeriodClicked(button: Button) {
+        val currentText = button.text.toString()
+        if(currentText == getString(R.string.start_pay_period)) {
+            // Start a pay period
+            val formatter = SimpleDateFormat("MM-dd-yyyy", Locale.US)
+            payPeriodStart = formatter.format(Date())
+
+            button.setText(R.string.end_pay_period)
+        } else {
+            // End a pay period
+            val formatter = SimpleDateFormat("MM-dd-yyyy", Locale.US)
+            val payPeriodEnd = formatter.format(Date())
+            val payPeriod = Pair(payPeriodStart, payPeriodEnd)
+            payPeriods.add(payPeriod)
+
+            button.setText(R.string.start_pay_period)
         }
     }
 }
