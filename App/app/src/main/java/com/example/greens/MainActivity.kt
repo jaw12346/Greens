@@ -61,9 +61,10 @@ class MainActivity : Activity() {
             // Start a pay period
             val formatter = SimpleDateFormat("MM-dd-yyyy", Locale.US)
             payPeriodStart = formatter.format(Date())
-            val newStr: String = getString(R.string.earned_income_since,
-                                            payPeriodStart[0], payPeriodStart[1], // Month
-                                            payPeriodStart[3], payPeriodStart[4])  // Day
+
+            val month: String = String.format("%c%c", payPeriodStart[0], payPeriodStart[1])
+            val day: String = String.format("%c%c", payPeriodStart[3], payPeriodStart[4])
+            val newStr: String = getString(R.string.earned_income_since, month, day)
 
             tField.text = newStr
             button.setText(R.string.end_pay_period)

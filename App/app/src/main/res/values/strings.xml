@@ -4,6 +4,6 @@
     <string name="end_shift">END SHIFT</string>
     <string name="start_pay_period">START PAY PERIOD</string>
     <string name="end_pay_period">END PAY PERIOD</string>
-    <string name="earned_income_since">Earned income since <b>(%1$c%2$c/%3$c%4$c)</b></string>  // mm/dd
+    <string name="earned_income_since">Earned income since <b>(%1$s/%2$s)</b></string>  // mm/dd
     <string name="no_start_date_set">No start date set, cannot display earned income</string>
 </resources>
