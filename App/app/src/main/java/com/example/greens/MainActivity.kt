@@ -3,6 +3,7 @@ package com.example.greens
 import android.app.Activity
 import android.os.Bundle
 import android.widget.Button
+import android.widget.TextView
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -55,11 +56,16 @@ class MainActivity : Activity() {
 
     private fun payPeriodClicked(button: Button) {
         val currentText = button.text.toString()
+        val tField = findViewById<TextView>(R.id.earned_income_text)
         if(currentText == getString(R.string.start_pay_period)) {
             // Start a pay period
             val formatter = SimpleDateFormat("MM-dd-yyyy", Locale.US)
             payPeriodStart = formatter.format(Date())
+            val newStr: String = getString(R.string.earned_income_since,
+                                            payPeriodStart[0], payPeriodStart[1], // Month
+                                            payPeriodStart[3], payPeriodStart[4])  // Day
 
+            tField.text = newStr
             button.setText(R.string.end_pay_period)
         } else {
             // End a pay period
@@ -68,6 +74,7 @@ class MainActivity : Activity() {
             val payPeriod = Pair(payPeriodStart, payPeriodEnd)
             payPeriods.add(payPeriod)
 
+            tField.setText(R.string.no_start_date_set)
             button.setText(R.string.start_pay_period)
         }
     }
