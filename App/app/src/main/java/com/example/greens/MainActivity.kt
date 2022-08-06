@@ -1,8 +1,10 @@
 package com.example.greens
 
 import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import java.text.SimpleDateFormat
 import java.util.*
@@ -31,6 +33,13 @@ class MainActivity : Activity() {
         val payPeriodButton: Button = findViewById<Button>(R.id.pay_period_button)  // Get the pay period button
         payPeriodButton.setOnClickListener {
             payPeriodClicked(payPeriodButton)
+        }
+
+        // Settings menu button
+        val settingsButton: ImageView = findViewById<ImageView>(R.id.settingsButton)  // Get the settings button
+        settingsButton.setOnClickListener {
+//            Settings()
+            startActivity(Intent(this@MainActivity, Settings::class.java))
         }
     }
 
