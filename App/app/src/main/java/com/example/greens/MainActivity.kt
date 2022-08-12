@@ -2,6 +2,7 @@ package com.example.greens
 
 import android.app.Activity
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageView
@@ -11,6 +12,8 @@ import java.util.*
 
 
 class MainActivity : Activity() {
+    private lateinit var prefs : SharedPreferences
+
     // Declare timestamp variables
     private var shiftStartTime : Long = -1
     private var totalShiftTimes : LinkedList<Long> = LinkedList()
@@ -22,6 +25,12 @@ class MainActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        prefs = getSharedPreferences("MainActivity", MODE_PRIVATE)
+        shiftStartTime = prefs.getLong("shiftStartTime", 1L)
+        payPeriodStart = prefs.getString("payPeriodStart", "default").toString()
+
+
 
         // Handle clicked shift button
         val shiftButton: Button = findViewById<Button>(R.id.shift_button)  // Get the shift button
@@ -39,6 +48,7 @@ class MainActivity : Activity() {
         val settingsButton: ImageView = findViewById<ImageView>(R.id.settingsButton)  // Get the settings button
         settingsButton.setOnClickListener {
 //            Settings()
+
             startActivity(Intent(this@MainActivity, Settings::class.java))
         }
     }
@@ -75,14 +85,18 @@ class MainActivity : Activity() {
             val day: String = String.format("%c%c", payPeriodStart[3], payPeriodStart[4])
             val newStr: String = getString(R.string.earned_income_since, month, day)
 
+            println("Pay period started on $month/$day.");
+
             tField.text = newStr
             button.setText(R.string.end_pay_period)
         } else {
             // End a pay period
-            val formatter = SimpleDateFormat("MM-dd-yyyy", Locale.US)
+            val formatter = SimpleDateFormat("MM/dd", Locale.US)
             val payPeriodEnd = formatter.format(Date())
             val payPeriod = Pair(payPeriodStart, payPeriodEnd)
             payPeriods.add(payPeriod)
+
+            println("Pay period ended on $payPeriodEnd.")
 
             tField.setText(R.string.no_start_date_set)
             button.setText(R.string.start_pay_period)

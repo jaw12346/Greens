@@ -1,9 +1,11 @@
 package com.example.greens
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Window
 import android.widget.ArrayAdapter
+import android.widget.Button
 import android.widget.Spinner
 
 class Settings : AppCompatActivity() {
@@ -20,5 +22,14 @@ class Settings : AppCompatActivity() {
 //                stateSpinner.adapter = adapter
 //        }
 
+        val cancelButton = findViewById<Button>(R.id.cancel_button);
+        cancelButton.setOnClickListener {
+            cancelReturn()
+        }
+
+    }
+
+    private fun cancelReturn() {
+        startActivity(Intent(this@Settings, MainActivity::class.java))
     }
 }
